@@ -12,7 +12,7 @@
 ## Installation Manual
 
 Το πρώτο βήμα ειναι το στήσιμο του MYSQL Database.
-Το schema της βασης βρισκεται στο αρχειο src/db-schema.sql
+Το schema της βασης βρισκεται στο αρχειο src/db-schema.sql το οποιο πρεπει να τρεξετε.
 
 Να δημιουργηθει ενα database. Στην συγκεκριμενη περιπτωση ονομαζεται john.
 
@@ -29,6 +29,16 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
 ```bash
 insert into officers (username, password, role) values ('officer1', '1234', 'Admin');
 ```
+
+Να δημιουργηθουν τα τμηματα τα οποια εχουν by default, status inactive
+
+```bash
+insert into applications (dept) values('Dietics');
+insert into applications (dept) values('Informatics');
+insert into applications (dept) values('Geography');
+insert into applications (dept) values('Economics');
+```
+
 Να ανανεωθει με τα σωστα στοχεια το αρχειο src/hibernate.cfg.xml 
 
 *Στο connection.url να αντικατασταθει η λεξη john μετα το port, με το ονομα της δικια σας βασης.
