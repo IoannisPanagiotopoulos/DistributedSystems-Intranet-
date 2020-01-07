@@ -9,8 +9,8 @@
            <!-- JDBC Database connection settings -->
            <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
            <property name="connection.url">jdbc:mysql://127.0.0.1:3306/john?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=GMT</property>
-           <property name="connection.username">mantzarisvas</property>
-           <property name="connection.password">Mantzaris13</property>
+           <property name="connection.username"></property>
+           <property name="connection.password"></property>
 
            <!-- JDBC connection pool settings ... using built-in test pool -->
            <property name="connection.pool_size">1</property>
