@@ -42,11 +42,11 @@ insert into applications (dept) values('Economics');
 
 Να ανανεωθει με τα σωστα στοχεια το αρχειο src/hibernate.cfg.xml 
 
-*Στο connection.url να αντικατασταθει η λεξη john μετα το port, με το ονομα της δικια σας βασης.
+* Στο connection.url να αντικατασταθει η λεξη john μετα το port, με το ονομα της δικια σας βασης.
 
-*Στο connection.username να συμπληρωθει το username του user.
+* Στο connection.username να συμπληρωθει το username του user.
 
-*Στο connection.password να συμπληρωθει το password του user.
+* Στο connection.password να συμπληρωθει το password του user.
 
 Μετα απο αυτα τα βηματα ειναι ετοιμο το σηκωμα της εφαρμογης σε εναν apache server.
 
