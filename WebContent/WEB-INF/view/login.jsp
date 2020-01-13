@@ -9,7 +9,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet" >
 </head>
 <body>
-<img src="/home/ioannispanagiotopoulos/Desktop/logo.png">
+<img src="C:\Users\mantz\Desktop\login-jsp\logo.png">
 	<div class="wrapper fadeInDown">
 		<div id="formContent">
 			<!-- Tabs Titles -->
@@ -18,7 +18,7 @@
 			<div class="fadeIn first"><h2>Harokopio University of Athens</h2></div>
 
 			<!-- Login Form -->
-			<form action="loginRegister" method="post">
+			<form action="${pageContext.request.contextPath}/authUser" method="post">
 				<table>
 					<tr>
 						<td><h3 style="color: red;">${message}</h3></td>
@@ -32,9 +32,6 @@
 					placeholder="password" autocomplete="off"> 
 				<input class="button" type="submit"
 					name="submit" value="login" class="fadeIn fourth">
-				<%--
-				<td><a href="register.jsp">Registration</a></td>
-				--%>
 			</form>
 
 		</div>
