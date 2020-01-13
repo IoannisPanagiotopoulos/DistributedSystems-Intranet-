@@ -8,12 +8,12 @@
 
            <!-- JDBC Database connection settings -->
            <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-           <property name="connection.url">jdbc:mysql://127.0.0.1:3306/webapplication?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=GMT</property>
-           <property name="connection.username">mantzarisvas</property>
-           <property name="connection.password">Mantzaris13</property>
+           <property name="connection.url">jdbc:mysql://remotemysql.com:3306/1u8u1XiQCZ?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=GMT</property>
+           <property name="connection.username">1u8u1XiQCZ</property>
+           <property name="connection.password">e6mOD8293p</property>
 
            <!-- JDBC connection pool settings ... using built-in test pool -->
-           <property name="connection.pool_size">1</property>
+           <!--  <property name="connection.pool_size">1</property>-->
 
            <!-- Select our SQL dialect -->
            <property name="dialect">org.hibernate.dialect.MySQLDialect</property>

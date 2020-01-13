@@ -28,11 +28,11 @@ public class User {
 	private int enabled;
 	
 	@PrimaryKeyJoinColumn
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	private UserInformation userInformation;
 	
 	@PrimaryKeyJoinColumn
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	private Authority authority;
 	
 	@PrimaryKeyJoinColumn
