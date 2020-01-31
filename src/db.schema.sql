@@ -42,7 +42,7 @@ CREATE TABLE `user` (
    `parent1_employmentStatus` enum('emp','unemp') NOT NULL,
    `parent2_employmentStatus` enum('emp','unemp') NOT NULL,
    `siblingsStudents` int(11) NOT NULL,
-   `active` enum('active','inactive') DEFAULT 'inactive',
+   `active` enum('active','inactive'),
    PRIMARY KEY (`username`),
    UNIQUE KEY `department_name` (`department_name`),
    CONSTRAINT `fk_application_department` FOREIGN KEY (`department_name`) REFERENCES `department` (`department_name`),

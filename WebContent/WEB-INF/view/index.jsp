@@ -48,7 +48,7 @@
 					aria-disabled="true">Show Applications</a></li>
 				</sec:authorize>
 			</ul>
-			User: <sec:authentication property="principal.username" /> <a
+			User: <sec:authentication property="principal.username" /> Name: ${officerName} <a
 				class="btn btn-outline-danger my-2 my-sm-0"
 				href="${pageContext.request.contextPath}/logout"> Logout</a>
 		</div>
@@ -56,19 +56,34 @@
 
 	<div class="container">
 		<sec:authorize access="hasRole('ADMIN')">
-			<p class="h3 active">This is the Admin Home Page. 
-			Navigate to Show Officers, to create/read/update/delete Officers
-			Navigate to Show Students, to create/read/update/delete Students</p>
+			<div class="alert alert-success mt-5">
+				<h3 class="alert-heading">This is the Admin Home Page!</h3>
+				<hr>
+				<ul>
+					<li>Navigate to Show Officers, to create/read/update/delete Officers</li>
+					<li>Navigate to Show Students, to create/read/update/delete Students</li>
+				</ul>
+			</div>
 		</sec:authorize>
 		<sec:authorize access="hasRole('SUPERVISOR')">
-			<p class="h3 active">This is the Supervisor Home Page.
-			Navigate to Show Students, to read Students
-			Navigate to Show Departments link, to read/activate Departments For Application</p>
+			<div class="alert alert-success mt-5">
+				<h3 class="alert-heading">This is the Supervisor Home Page!</h3>
+				<hr>
+				<ul>
+					<li>Navigate to Show Students, to read Students</li>
+					<li>Navigate to Show Departments link, to read/activate Departments For Application</li>
+				</ul>
+			</div>
 		</sec:authorize>
 		<sec:authorize access="hasRole('OFFICER')">
-			<p class="h3 active">This is the Officer Home Page.
-			Navigate to Show Students, to read/activate Students
-			Navigate to Show Applications, to activate/reject Applications</p>
+			<div class="alert alert-success mt-5">
+				<h3 class="alert-heading">This is the Officer Home Page!</h3>
+				<hr>
+				<ul>
+					<li>Navigate to Show Students, to read/activate Students</li>
+					<li>Navigate to Show Applications, to activate/reject Applications</li>
+				</ul>
+			</div>
 		</sec:authorize>
 	</div>
 </body>

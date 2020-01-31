@@ -76,7 +76,8 @@
 				    <span name="authorizationerror">${error}</span>
 					<form class="table" method="post" action="${pageContext.request.contextPath}/application/handle">
 						<tr>
-							<td>${app.username}</td>
+							<td><input type="hidden" name="username" autocomplete="off"
+								value="${app.username}">${app.username}</td>
 							<td>${app.departmentName}</td>
 							<td>${app.city}</td>
 							<td>${app.personalIncome}</td>

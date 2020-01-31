@@ -8,11 +8,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 
 import gr.hua.ds.users.dao.UserInformationDAO;
 import gr.hua.ds.users.model.User;
 import gr.hua.ds.users.model.UserInformation;
 
+@Repository
 public class UserInformationDAOImpl implements UserInformationDAO {
 	
 	//TODO Check this class, Student is UserInformation now

@@ -13,8 +13,7 @@
 
 ## Installation Manual
 
-Το πρώτο βήμα ειναι το στήσιμο του MYSQL Database.
-Το schema της βασης βρισκεται στο αρχειο src/db-schema.sql το οποιο πρεπει να τρεξετε.
+Το schema της βασης βρισκεται στο αρχειο src/db-schema.sql.
 
 Να δημιουργηθει ενα database. Στην συγκεκριμενη περιπτωση ονομαζεται john.
 

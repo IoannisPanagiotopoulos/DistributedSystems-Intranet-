@@ -9,6 +9,8 @@ public interface UserDAO {
 	public User getUserByUsernameAndPass(String username, String password);
 	public User getUserByUsername(String username);
 	
+	public List<User> getUsers();
+	
 	public List<User> getStudents();
 	public List<User> getStudentsByDept(Enums.Dept department);
 	
@@ -21,6 +23,7 @@ public interface UserDAO {
 	public List<User> getAllOfficers();
 	public List<User> getOfficersByDept(Enums.Dept department);
 	
+	public void insertUserOnly(User u);
 	public void insertUser(User u);
 	public void updateUser(User oldUser, User newUser);
 	public void deleteUser(User u);

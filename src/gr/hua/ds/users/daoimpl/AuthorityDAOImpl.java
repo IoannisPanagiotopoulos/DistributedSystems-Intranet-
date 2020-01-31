@@ -5,11 +5,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 
 import gr.hua.ds.users.dao.AuthorityDAO;
 import gr.hua.ds.users.model.Authority;
 import gr.hua.ds.users.model.User;
 
+@Repository
 public class AuthorityDAOImpl implements AuthorityDAO {
 
 	private SessionFactory sessionFactory =  new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Authority.class)

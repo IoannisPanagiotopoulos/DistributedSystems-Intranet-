@@ -1,7 +1,9 @@
 package gr.hua.ds.algorithms;
 
 import gr.hua.ds.users.dao.UserDAO;
+import gr.hua.ds.users.dao.UserInformationDAO;
 import gr.hua.ds.users.daoimpl.UserDAOImpl;
+import gr.hua.ds.users.daoimpl.UserInformationDAOImpl;
 import gr.hua.ds.users.model.Application;
 import gr.hua.ds.users.model.User;
 
@@ -30,11 +32,12 @@ public class RankingAlgorithm {
 				}
 			}
 			UserDAO ud = new UserDAOImpl();
+			UserInformationDAO uid = new UserInformationDAOImpl();
 			System.out.println(app.getUsername());
 			User oldUser = ud.getUserByUsername(app.getUsername());
 			User newUser = oldUser;
 			newUser.getUserInformation().setPoints(points);
-			ud.updateUser(oldUser, newUser);
+			uid.updateUserInformation(newUser.getUserInformation());
 		}
 	
 	

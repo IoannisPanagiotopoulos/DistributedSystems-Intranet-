@@ -10,7 +10,7 @@ public class Enums {
 		active, inactive, STRING
 	}
 
-	public enum empstatus {
+	public enum Empstatus {
 		emp, unemp
 	}
 
@@ -26,11 +26,11 @@ public class Enums {
 		}
 	}
 
-	public static empstatus StringtoEnumConverterempstatus(String stringtobeenumed) {
+	public static Empstatus StringtoEnumConverterempstatus(String stringtobeenumed) {
 		if (stringtobeenumed.equals("emp")) {
-			return empstatus.emp;
+			return Empstatus.emp;
 		} else if (stringtobeenumed.equals("unemp")) {
-			return empstatus.unemp;
+			return Empstatus.unemp;
 		} else {
 			return null;
 		}

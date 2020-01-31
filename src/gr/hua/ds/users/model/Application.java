@@ -32,11 +32,11 @@ public class Application {
 	
 	@Column(name = "parent1_employmentStatus")
 	@Enumerated(EnumType.STRING)
-	private empstatus parent1_employmentStatus;
+	private Empstatus parent1_employmentStatus;
 	
 	@Column(name = "parent2_employmentStatus")
 	@Enumerated(EnumType.STRING)
-	private empstatus parent2_employmentStatus;
+	private Empstatus parent2_employmentStatus;
 
 	@Column(name = "siblingsStudents")
 	private int siblingsStudents;
@@ -50,7 +50,7 @@ public class Application {
 	}
 	
 	public Application(String username, Dept departmentName, String city, int personalIncome, int familyIncome,
-			empstatus parent1_employmentStatus, empstatus parent2_employmentStatus, int siblingsStudents,
+			Empstatus parent1_employmentStatus, Empstatus parent2_employmentStatus, int siblingsStudents,
 			Activable active) {
 		super();
 		this.username = username;
@@ -104,19 +104,19 @@ public class Application {
 		this.familyIncome = familyIncome;
 	}
 
-	public empstatus getParent1_employmentStatus() {
+	public Empstatus getParent1_employmentStatus() {
 		return parent1_employmentStatus;
 	}
 
-	public void setParent1_employmentStatus(empstatus parent1_employmentStatus) {
+	public void setParent1_employmentStatus(Empstatus parent1_employmentStatus) {
 		this.parent1_employmentStatus = parent1_employmentStatus;
 	}
 
-	public empstatus getParent2_employmentStatus() {
+	public Empstatus getParent2_employmentStatus() {
 		return parent2_employmentStatus;
 	}
 
-	public void setParent2_employmentStatus(empstatus parent2_employmentStatus) {
+	public void setParent2_employmentStatus(Empstatus parent2_employmentStatus) {
 		this.parent2_employmentStatus = parent2_employmentStatus;
 	}
 

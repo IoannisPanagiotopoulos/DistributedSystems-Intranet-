@@ -5,10 +5,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
+
 import gr.hua.ds.users.dao.DepartmentDAO;
 import gr.hua.ds.users.model.Department;
 import gr.hua.ds.users.model.Enums.Dept;
 
+@Repository
 public class DepartmentDAOImpl implements DepartmentDAO {
 
 	private SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")

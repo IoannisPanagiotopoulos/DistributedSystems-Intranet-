@@ -91,8 +91,10 @@
 							<td>${student.userInformation.email}</td>
 							<td>${student.userInformation.departmentName}</td>
 							<td>${student.userInformation.activated}
+							<sec:authorize access="hasRole('ADMIN') or hasRole('OFFICER')">
 							<td><button class="btn btn-outline-primary" type="submit"
 									name="action" value="edit">Edit</button></td>
+							</sec:authorize>
 						</tr>
 					</form>
 				</c:forEach>

@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import gr.hua.ds.users.dao.AuthorityDAO;
 import gr.hua.ds.users.dao.UserDAO;
@@ -15,6 +17,7 @@ import gr.hua.ds.users.dao.UserInformationDAO;
 import gr.hua.ds.users.model.Enums.*;
 import gr.hua.ds.users.model.User;
 
+@Repository
 public class UserDAOImpl implements UserDAO {
 	
 	private SessionFactory sessionFactory =  new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(User.class)
@@ -24,16 +27,11 @@ public class UserDAOImpl implements UserDAO {
         this.sessionFactory = sessionFactory;
     }
    	
-   	AuthorityDAO authorityDAO = new AuthorityDAOImpl();
-   	UserInformationDAO userInformationDAO = new UserInformationDAOImpl();
-
-	public void setAd(AuthorityDAO authorityDAO) {
-		this.authorityDAO = authorityDAO;
-	}
-	
-	public void setUid(UserInformationDAO userInformationDAO) {
-		this.userInformationDAO = userInformationDAO;
-	}
+   	@Autowired
+   	private AuthorityDAO authorityDao;
+   	
+   	@Autowired
+   	private UserInformationDAO userInformationDao;
 
 	@Override
 	public User getUserByUsernameAndPass(String username, String password) {
@@ -73,17 +71,15 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User getUserByUsername(String username) {
 		Session session = this.sessionFactory.openSession();
-		List<User> users = session.createQuery("from User",User.class).getResultList();
-		User selectedUser = null;
-		
-		for(User user : users) {
-			if(user.getUsername().equals(username)) {
-				selectedUser = user;
-			}
+		User user = null;
+		try {			
+			user = session.createQuery("from User u where u.username=:username",User.class)
+					.setParameter("username", username).getSingleResult();
+		} catch (NoResultException nre) {
+			
 		}
-		
 		session.close();
-		return selectedUser;
+		return user;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -160,7 +156,18 @@ public class UserDAOImpl implements UserDAO {
 		session.close();
 		return users;
 	}
-
+	
+	@Override
+	public void insertUserOnly(User user) {
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.save(user);
+		
+		tx.commit();
+		session.close();
+	}
+	
 	@Override
 	public void insertUser(User user) {
 		Session session = this.sessionFactory.openSession();
@@ -171,8 +178,8 @@ public class UserDAOImpl implements UserDAO {
 		tx.commit();
 		session.close();
 		
-		this.authorityDAO.insertAuthority(user.getAuthority());
-		this.userInformationDAO.insertUserInformation(user.getUserInformation());
+		this.authorityDao.insertAuthority(user.getAuthority());
+		this.userInformationDao.insertUserInformation(user.getUserInformation());
 	}
 	
 	@Override
@@ -190,8 +197,8 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void deleteUser(User user) {
 		
-		this.authorityDAO.deleteAuthority(user.getAuthority());
-		this.userInformationDAO.deleteUserInformation(user.getUserInformation());
+		this.authorityDao.deleteAuthority(user.getAuthority());
+		this.userInformationDao.deleteUserInformation(user.getUserInformation());
 		
 		Session session = this.sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
@@ -234,6 +241,15 @@ public class UserDAOImpl implements UserDAO {
 		}
 		session.close();
 		return user;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getUsers() {
+		Session session = this.sessionFactory.openSession();
+		List<User> students = session.createQuery("from User").getResultList();
+		session.close();
+		return students;
 	}
 	
 }

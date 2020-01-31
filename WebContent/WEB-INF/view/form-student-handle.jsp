@@ -66,6 +66,7 @@
 					<th>Email</th>
 					<th>Department</th>
 					<th>Activate</th>
+					<th>Action</th>
 				</tr>
 					<form action="${pageContext.request.contextPath}/student/handle" method="post">
 					<span name="errorrun">${errorun}</span>
@@ -73,8 +74,8 @@
 						<sec:authorize access="hasRole('ADMIN')">
 							<td><input type="hidden" name="username" autocomplete="off"
 								value="${student.username}">${student.username}</td>
-							<td><input type="text" name="password" autocomplete="off"
-								value="${student.password}"></td>
+							<td><input type="hidden" name="password" autocomplete="off"
+								value="${student.password}">${student.password}</td>
 							<td><input type="text" name="name" autocomplete="off"
 								value="${student.userInformation.name}"></td>
 							<td><input type="text" name="email" autocomplete="off"
@@ -103,25 +104,23 @@
 								value="${student.userInformation.name}">${student.userInformation.name}</td>
 							<td><input type="hidden" name="email" autocomplete="off"
 								value="${student.userInformation.email}">${student.userInformation.email}</td>
-							<td><input type="hidden" name="departmentName" autocomplete="off"
+							<td><input type="hidden" name="department" autocomplete="off"
 								value="${student.userInformation.departmentName}">${student.userInformation.departmentName}</td>
-							<c:if test="${student.userInformation.activated='inactive'}">
+							<c:if test="${student.userInformation.activated == 'inactive'}">
 							<td><select name="activated">
 									<option value="active" selected>Activated</option>
 									<option value="inactive">Not Activated</option>
 							</select></td>
 							</c:if>
-							<c:if test="${student.userInformation.activated='active'}">
+							<c:if test="${student.userInformation.activated == 'active'}">
 							<td><input type="hidden" name="active" autocomplete="off"
 								value="${student.userInformation.activated}">${student.userInformation.activated}</td>
 							</c:if>
 							<td>
-								<c:if test="${student.userInformation.activated='inactive'}">
+								<c:if test="${student.userInformation.activated == 'inactive'}">
 								<button class="btn btn-outline-success" type="submit"
 									name="action" value="submit">Submit</button>
 								</c:if>
-								<button class="btn btn-outline-danger" type="submit"
-									name="action" value="delete">Delete</button>
 							</td>
 						</sec:authorize>
 						</tr>

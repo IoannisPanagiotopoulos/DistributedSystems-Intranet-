@@ -66,7 +66,7 @@
 					<th>Acceptance Percentage</th>
 				</tr>
 				<c:forEach items="${departments}" var="dpt" varStatus="count">
-					<form class="table" name="form" method="post" action="department/activate"
+					<form class="table" name="form" method="post" action="${pageContext.request.contextPath}/department/activate"
 						onsubmit="return validateForm(${count.index})">
 						<tr>
 							<td><input type="hidden" name="department"

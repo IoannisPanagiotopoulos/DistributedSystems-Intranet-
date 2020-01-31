@@ -5,8 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,11 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import gr.hua.ds.users.dao.DepartmentDAO;
 import gr.hua.ds.users.dao.UserDAO;
-import gr.hua.ds.users.daoimpl.UserDAOImpl;
 import gr.hua.ds.users.model.Authority;
-import gr.hua.ds.users.model.Department;
 import gr.hua.ds.users.model.Enums;
 import gr.hua.ds.users.model.User;
 import gr.hua.ds.users.model.UserInformation;
@@ -30,16 +25,21 @@ import gr.hua.ds.users.model.UserInformation;
 @RequestMapping("/officer")
 public class OfficerController {
 	
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	};
+	@Autowired 
+	private UserDAO userDao;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+//	@Bean
+//	public BCryptPasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	};
 	
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/list")
 	public String listOfficers(Model model) {
-		UserDAO userDAO = new UserDAOImpl();
-		List<User> officers = userDAO.getOfficers();
+		List<User> officers = userDao.getOfficers();
 		model.addAttribute("officers", officers);
 		return "list-officer";
 	}
@@ -53,8 +53,7 @@ public class OfficerController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/id/{username}")
 	public String getOfficer(Model model, @PathVariable("username") String username) {
-		UserDAO userDAO = new UserDAOImpl();
-		User officer = userDAO.getOfficerByUsername(username);
+		User officer = userDao.getOfficerByUsername(username);
 		model.addAttribute("officer", officer);
 		return "form-officer-handle";
 	}
@@ -62,21 +61,20 @@ public class OfficerController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/handle")
 	public RedirectView handleOfficer(HttpServletRequest request, Model model) {
-		UserDAO userDAO = new UserDAOImpl();
-		User user = userDAO.getOfficerByUsername((String)request.getParameter("username"));
+		User user = userDao.getOfficerByUsername((String)request.getParameter("username"));
 		if(user!=null) {
 			if(request.getParameter("action").equals("delete")) {
-				userDAO.deleteUser(user);
+				userDao.deleteUser(user);
 				return new RedirectView(request.getContextPath()+"/officer/list");
 			}else {
 				User newUser = user;
-				newUser.setPassword(passwordEncoder().encode(request.getParameter("password")));
+				newUser.setPassword(passwordEncoder.encode(request.getParameter("password")));
 				newUser.getUserInformation().setName(request.getParameter("name"));
 				newUser.getUserInformation().setEmail(request.getParameter("email"));
 				newUser.getUserInformation().setDepartmentName(Enums.StringtobeEnumConverterDept(request.getParameter("department")));
 				newUser.getAuthority().setAuthorityRole(Enums.StringtoEnumConverterRole(request.getParameter("role")));
 				
-				userDAO.updateUser(user, newUser);
+				userDao.updateUser(user, newUser);
 				return new RedirectView(request.getContextPath()+"/officer/list");
 			}
 		} else {
@@ -88,8 +86,7 @@ public class OfficerController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/addPost")
 	public RedirectView addOfficerPost(HttpServletRequest request, Model model) {
-		UserDAO userDAO = new UserDAOImpl();
-		User u = userDAO.getOfficerByUsername((String)request.getParameter("username"));
+		User u = userDao.getOfficerByUsername((String)request.getParameter("username"));
 		if(u==null) {
 			User user = new User();
 			UserInformation ui = new UserInformation();
@@ -99,7 +96,7 @@ public class OfficerController {
 			user.setAuthority(a);
 			
 			user.setUsername(request.getParameter("username"));
-			user.setPassword(passwordEncoder().encode(request.getParameter("password")));
+			user.setPassword(passwordEncoder.encode(request.getParameter("password")));
 			user.setEnabled(1);
 			user.getUserInformation().setUsername(user.getUsername());
 			user.getUserInformation().setName(request.getParameter("name"));
@@ -108,7 +105,7 @@ public class OfficerController {
 			user.getAuthority().setUsername(user.getUsername());
 			user.getAuthority().setAuthorityRole(Enums.StringtoEnumConverterRole(request.getParameter("role")));
 			
-			userDAO.insertUser(user);
+			userDao.insertUser(user);
 			
 			return new RedirectView(request.getContextPath()+"/officer/list");
 		} else {
