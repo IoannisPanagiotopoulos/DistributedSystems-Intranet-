@@ -71,13 +71,14 @@
 					<th>Email</th>
 					<th>Department</th>
 					<th>Role</th>
+					<th>Action</th>
 				</tr>
 					<form action="${pageContext.request.contextPath}/officer/handle" method="post">
 						<tr>
 							<td><input type="hidden" name="username" autocomplete="off"
-								value="${officer.username}">${officer.username}</td>
-							<td><input type="text" name="password" autocomplete="off"
-								value="${officer.password}"></td>
+								value="${officer.username}">${officer.username}</td>	
+							<td><input type="password" name="password" autocomplete="off"
+								value=""></td>
 							<td><input type="text" name="name" autocomplete="off"
 								value="${officer.userInformation.name}"></td>
 							<td><input type="email" name="email" autocomplete="off"
@@ -98,6 +99,7 @@
 									name="action" value="delete">Delete</button></td>
 						</tr>
 						<span name="error">${errorun}</span>
+						Change Password <input type="checkbox" name="checkbox">
 					</form>
 			</table>
 		</div>
@@ -105,8 +107,8 @@
 	<script type="text/javascript">
      function alertName(){
       alert("Form has been submitted");
-      } 
-</script>
+      }
+	</script>
 
 </body>
 </html>

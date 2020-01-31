@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import gr.hua.ds.users.dao.ApplicationDAO;
 import gr.hua.ds.users.dao.UserDAO;
 import gr.hua.ds.users.model.Enums.Activable;
 import gr.hua.ds.users.model.Enums.Role;
@@ -30,6 +31,9 @@ public class StudentController {
 	
 	@Autowired
 	private UserDAO userDao;
+	
+	@Autowired
+	private ApplicationDAO applicationDao;
 	
 	@Autowired
 	public BCryptPasswordEncoder passwordEncoder;
@@ -70,12 +74,19 @@ public class StudentController {
 	@PostMapping("/handle")
 	public RedirectView handleStudent(HttpServletRequest request, Model model) {
 		User user = userDao.getStudentByUsername((String)request.getParameter("username"));
+		String checkboxValue = request.getParameter("checkbox");
 		if(user!=null) {
 			if(request.getParameter("action").equals("delete")) {
+				if(user.getApplication() != null) {
+					applicationDao.deleteApplication(user.getApplication());
+				}
 				userDao.deleteUser(user);
 				return new RedirectView(request.getContextPath()+"/student/list");
 			}else {
 				User newUser = user;
+				if(checkboxValue != null) {
+					newUser.setPassword(passwordEncoder.encode(request.getParameter("password")));
+				}
 				newUser.getUserInformation().setName(request.getParameter("name"));
 				newUser.getUserInformation().setEmail(request.getParameter("email"));
 				newUser.getUserInformation().setDepartmentName(Enums.StringtobeEnumConverterDept(request.getParameter("department")));

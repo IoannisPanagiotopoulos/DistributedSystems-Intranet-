@@ -76,7 +76,7 @@
 						<tr>
 							<td><input type="text" name="username" autocomplete="off"
 								value="${username}"></td>
-							<td><input type="text" name="password" autocomplete="off"
+							<td><input type="password" name="password" autocomplete="off"
 								value="${password}"></td>
 							<td><input type="text" name="name" autocomplete="off"
 								value="${name}"></td>

@@ -62,13 +62,16 @@ public class OfficerController {
 	@PostMapping("/handle")
 	public RedirectView handleOfficer(HttpServletRequest request, Model model) {
 		User user = userDao.getOfficerByUsername((String)request.getParameter("username"));
+		String checkboxValue = request.getParameter("checkbox");
 		if(user!=null) {
 			if(request.getParameter("action").equals("delete")) {
 				userDao.deleteUser(user);
 				return new RedirectView(request.getContextPath()+"/officer/list");
 			}else {
 				User newUser = user;
-				newUser.setPassword(passwordEncoder.encode(request.getParameter("password")));
+				if(checkboxValue != null) {
+					newUser.setPassword(passwordEncoder.encode(request.getParameter("password")));
+				}
 				newUser.getUserInformation().setName(request.getParameter("name"));
 				newUser.getUserInformation().setEmail(request.getParameter("email"));
 				newUser.getUserInformation().setDepartmentName(Enums.StringtobeEnumConverterDept(request.getParameter("department")));

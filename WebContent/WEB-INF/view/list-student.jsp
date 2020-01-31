@@ -67,7 +67,6 @@
 			<table class="table">
 				<tr>
 					<th>Username</th>
-					<th>Password</th>
 					<th>Name</th>
 					<th>Email</th>
 					<th>Department</th>
@@ -86,7 +85,6 @@
 					<form class="table" method="post" action="${pageContext.request.contextPath}/student/id/${student.username}">
 						<tr>
 							<td>${student.username}</td>
-							<td>${student.password}</td>
 							<td>${student.userInformation.name}</td>
 							<td>${student.userInformation.email}</td>
 							<td>${student.userInformation.departmentName}</td>

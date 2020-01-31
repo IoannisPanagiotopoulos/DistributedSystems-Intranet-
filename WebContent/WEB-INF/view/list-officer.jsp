@@ -67,7 +67,6 @@
 			<table class="table">
 				<tr>
 					<th>Username</th>
-					<th>Password</th>
 					<th>Name</th>
 					<th>Email</th>
 					<th>Department</th>
@@ -84,7 +83,6 @@
 					<form class="table" method="post" action="${pageContext.request.contextPath}/officer/id/${officer.username}">
 						<tr>
 							<td>${officer.username}</td>
-							<td>${officer.password}</td>
 							<td>${officer.userInformation.name}</td>
 							<td>${officer.userInformation.email}</td>
 							<td>${officer.userInformation.departmentName}</td>

@@ -61,7 +61,9 @@
 			<table class="table">
 				<tr>
 					<th>Username</th>
-					<th>Password</th>
+					<sec:authorize access="hasRole('ADMIN')">
+						<th>Password</th>
+					</sec:authorize>
 					<th>Name</th>
 					<th>Email</th>
 					<th>Department</th>
@@ -74,8 +76,8 @@
 						<sec:authorize access="hasRole('ADMIN')">
 							<td><input type="hidden" name="username" autocomplete="off"
 								value="${student.username}">${student.username}</td>
-							<td><input type="hidden" name="password" autocomplete="off"
-								value="${student.password}">${student.password}</td>
+							<td><input type="password" name="password" autocomplete="off"
+								value=""></td>
 							<td><input type="text" name="name" autocomplete="off"
 								value="${student.userInformation.name}"></td>
 							<td><input type="text" name="email" autocomplete="off"
@@ -98,8 +100,6 @@
 						<sec:authorize access="hasRole('OFFICER')">
 							<td><input type="hidden" name="username" autocomplete="off"
 								value="${student.username}">${student.username}</td>
-							<td><input type="hidden" name="password" autocomplete="off"
-								value="${student.password}">${student.password}</td>
 							<td><input type="hidden" name="name" autocomplete="off"
 								value="${student.userInformation.name}">${student.userInformation.name}</td>
 							<td><input type="hidden" name="email" autocomplete="off"
@@ -124,6 +124,9 @@
 							</td>
 						</sec:authorize>
 						</tr>
+						<sec:authorize access="hasRole('ADMIN')">
+							Change Password <input type="checkbox" name="checkbox">
+						</sec:authorize>
 					</form>
 			</table>
 		</div>
