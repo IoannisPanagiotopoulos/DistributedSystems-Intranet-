@@ -17,7 +17,7 @@ public class Application {
 	@Column(name = "username")
 	private String username;
 
-	@Column(name = "department_name")
+	@Column(name = "department_name", columnDefinition="ENUM('Informatics','Geography','Dietics','Economics)")
 	@Enumerated(EnumType.STRING)
 	private Dept departmentName;
 	
@@ -30,18 +30,18 @@ public class Application {
 	@Column(name = "familyIncome")
 	private int familyIncome;
 	
-	@Column(name = "parent1_employmentStatus")
+	@Column(name = "parent1_employmentStatus", columnDefinition="ENUM('emp','unemp')")
 	@Enumerated(EnumType.STRING)
 	private Empstatus parent1_employmentStatus;
 	
-	@Column(name = "parent2_employmentStatus")
+	@Column(name = "parent2_employmentStatus", columnDefinition="ENUM('emp','unemp')")
 	@Enumerated(EnumType.STRING)
 	private Empstatus parent2_employmentStatus;
 
 	@Column(name = "siblingsStudents")
 	private int siblingsStudents;
 	
-	@Column(name = "active")
+	@Column(name = "active", columnDefinition="ENUM('active','inactive')")
 	@Enumerated(EnumType.STRING)
 	private Activable active;
 

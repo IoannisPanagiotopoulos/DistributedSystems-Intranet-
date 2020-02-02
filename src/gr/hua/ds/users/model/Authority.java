@@ -16,7 +16,7 @@ public class Authority {
 	private String username;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "authority")
+	@Column(name = "authority", columnDefinition="ENUM('ROLE_ADMIN','ROLE_SUPERVISOR','ROLE_OFFICER','ROLE_STUDENT')")
 	private Enums.Role authorityRole;
 	
 	public Authority() {
