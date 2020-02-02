@@ -19,14 +19,14 @@ import gr.hua.ds.users.model.Enums.*;
 public class Department {
 	
 	@Id
-	@Column(name="department_name")
+	@Column(name="department_name", columnDefinition="ENUM('Informatics','Geography','Dietics','Economics)")
 	@Enumerated(EnumType.STRING)
 	private Dept departmentName;
 	
 	@Column(name= "percentage")
 	private int percentage;
 	
-	@Column(name = "active")
+	@Column(name = "active", columnDefinition="ENUM('active','inactive')")
 	@Enumerated(EnumType.STRING)
 	private Activable  active;
 	

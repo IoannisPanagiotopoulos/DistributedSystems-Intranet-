@@ -1,6 +1,9 @@
 package gr.hua.ds.users.daoimpl;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 import javax.persistence.NoResultException;
 import org.hibernate.Session;
@@ -15,9 +18,25 @@ import gr.hua.ds.users.model.Enums.*;
 
 @Repository
 public class ApplicationDAOImpl implements ApplicationDAO {
-
-	private SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Application.class).buildSessionFactory();
-
+	
+	public SessionFactory getSessionFactory() {
+		Properties properties = new Properties();
+		try {
+			properties.load(getClass().getResourceAsStream("/db.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+				.addProperties(properties).addAnnotatedClass(Application.class).buildSessionFactory();
+		
+		return sessionFactory;
+	}
+	
+	
+	
+	
+	private SessionFactory sessionFactory = getSessionFactory();
+			
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}

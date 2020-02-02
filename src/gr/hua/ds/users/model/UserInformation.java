@@ -22,14 +22,14 @@ public class UserInformation {
 	private String email;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "department_name")
+	@Column(name = "department_name", columnDefinition="ENUM('Informatics','Geography','Dietics','Economics)")
 	private Enums.Dept departmentName;
 	
 	@Column(name = "points")
 	private int points;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "activated")
+	@Column(name = "activated", columnDefinition="ENUM('active','inactive')")
 	private Enums.Activable activated;
 	
 	public UserInformation() {

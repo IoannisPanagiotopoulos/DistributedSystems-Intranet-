@@ -1,6 +1,9 @@
 package gr.hua.ds.users.daoimpl;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -20,8 +23,23 @@ import gr.hua.ds.users.model.User;
 @Repository
 public class UserDAOImpl implements UserDAO {
 	
-	private SessionFactory sessionFactory =  new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(User.class)
-			.buildSessionFactory();
+	public SessionFactory getSessionFactory() {
+		Properties properties = new Properties();
+		try {
+			properties.load(getClass().getResourceAsStream("/db.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml")
+				.addProperties(properties).addAnnotatedClass(User.class).buildSessionFactory();
+		
+		return sessionFactory;
+	}
+	
+	
+	
+	
+	private SessionFactory sessionFactory =  getSessionFactory();
 
    	public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
