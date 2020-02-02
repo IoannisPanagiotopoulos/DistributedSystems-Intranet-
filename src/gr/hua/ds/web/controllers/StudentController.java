@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import gr.hua.ds.users.dao.ApplicationDAO;
-import gr.hua.ds.users.dao.UserDAO;
+import gr.hua.ds.service.ApplicationService;
+import gr.hua.ds.service.UserService;
 import gr.hua.ds.users.model.Enums.Activable;
 import gr.hua.ds.users.model.Enums.Role;
 import gr.hua.ds.users.model.Authority;
@@ -30,29 +30,24 @@ import gr.hua.ds.users.model.UserInformation;
 public class StudentController {
 	
 	@Autowired
-	private UserDAO userDao;
+	private UserService userService;
 	
 	@Autowired
-	private ApplicationDAO applicationDao;
+	private ApplicationService applicationService;
 	
 	@Autowired
 	public BCryptPasswordEncoder passwordEncoder;
-	
-//	@Bean
-//	public BCryptPasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	};
 	
 	@Secured({"ROLE_SUPERVISOR", "ROLE_OFFICER", "ROLE_ADMIN"})
 	@GetMapping("/list")
 	public String listStudents(Principal principal, Model model) {
 		List<User> students = null;
-		User u = userDao.getOfficerByUsername((String)principal.getName());
+		User u = userService.getOfficerByUsername((String)principal.getName());
 		if(u.getAuthority().getAuthorityRole().equals(Role.ROLE_ADMIN) ||
 				u.getAuthority().getAuthorityRole().equals(Role.ROLE_SUPERVISOR)) {
-			students = userDao.getStudents();
+			students = userService.getStudents();
 		} else {
-			students = userDao.getStudentsByDept(u.getUserInformation().getDepartmentName());
+			students = userService.getStudentsByDept(u.getUserInformation().getDepartmentName());
 		}
 		model.addAttribute("students", students);
 		return "list-student";
@@ -66,21 +61,21 @@ public class StudentController {
 	
 	@PostMapping("/id/{username}")
 	public String getStudent(Model model, @PathVariable("username") String username) {
-		User student = userDao.getUserByUsername(username);
+		User student = userService.getUserByUsername(username);
 		model.addAttribute("student", student);
 		return "form-student-handle";
 	}
 	
 	@PostMapping("/handle")
 	public RedirectView handleStudent(HttpServletRequest request, Model model) {
-		User user = userDao.getStudentByUsername((String)request.getParameter("username"));
+		User user = userService.getStudentByUsername((String)request.getParameter("username"));
 		String checkboxValue = request.getParameter("checkbox");
 		if(user!=null) {
 			if(request.getParameter("action").equals("delete")) {
 				if(user.getApplication() != null) {
-					applicationDao.deleteApplication(user.getApplication());
+					applicationService.deleteApplication(user.getApplication());
 				}
-				userDao.deleteUser(user);
+				userService.deleteUser(user);
 				return new RedirectView(request.getContextPath()+"/student/list");
 			}else {
 				User newUser = user;
@@ -92,7 +87,7 @@ public class StudentController {
 				newUser.getUserInformation().setDepartmentName(Enums.StringtobeEnumConverterDept(request.getParameter("department")));
 				newUser.getUserInformation().setActivated(Enums.StringtoEnumCoverterActivable(request.getParameter("activated")));
 				
-				userDao.updateUser(user, newUser);
+				userService.updateUser(user, newUser);
 				return new RedirectView(request.getContextPath()+"/student/list");
 			}
 		} else {
@@ -104,7 +99,7 @@ public class StudentController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/addPost")
 	public RedirectView addStudentPost(HttpServletRequest request, Model model) {
-		User u = userDao.getOfficerByUsername((String)request.getParameter("username"));
+		User u = userService.getOfficerByUsername((String)request.getParameter("username"));
 		if(u==null) {
 			User user = new User();
 			UserInformation ui = new UserInformation();
@@ -124,7 +119,7 @@ public class StudentController {
 			user.getAuthority().setUsername(user.getUsername());
 			user.getAuthority().setAuthorityRole(Role.ROLE_STUDENT);
 			
-			userDao.insertUser(user);
+			userService.insertUser(user);
 			
 			return new RedirectView(request.getContextPath()+"/student/list");
 		} else {

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import gr.hua.ds.users.dao.UserDAO;
+import gr.hua.ds.service.UserService;
 import gr.hua.ds.users.model.Authority;
 import gr.hua.ds.users.model.Enums;
 import gr.hua.ds.users.model.User;
@@ -26,20 +26,15 @@ import gr.hua.ds.users.model.UserInformation;
 public class OfficerController {
 	
 	@Autowired 
-	private UserDAO userDao;
+	private UserService userService;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-//	@Bean
-//	public BCryptPasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	};
-	
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/list")
 	public String listOfficers(Model model) {
-		List<User> officers = userDao.getOfficers();
+		List<User> officers = userService.getOfficers();
 		model.addAttribute("officers", officers);
 		return "list-officer";
 	}
@@ -53,7 +48,7 @@ public class OfficerController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/id/{username}")
 	public String getOfficer(Model model, @PathVariable("username") String username) {
-		User officer = userDao.getOfficerByUsername(username);
+		User officer = userService.getOfficerByUsername(username);
 		model.addAttribute("officer", officer);
 		return "form-officer-handle";
 	}
@@ -61,11 +56,11 @@ public class OfficerController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/handle")
 	public RedirectView handleOfficer(HttpServletRequest request, Model model) {
-		User user = userDao.getOfficerByUsername((String)request.getParameter("username"));
+		User user = userService.getOfficerByUsername((String)request.getParameter("username"));
 		String checkboxValue = request.getParameter("checkbox");
 		if(user!=null) {
 			if(request.getParameter("action").equals("delete")) {
-				userDao.deleteUser(user);
+				userService.deleteUser(user);
 				return new RedirectView(request.getContextPath()+"/officer/list");
 			}else {
 				User newUser = user;
@@ -77,7 +72,7 @@ public class OfficerController {
 				newUser.getUserInformation().setDepartmentName(Enums.StringtobeEnumConverterDept(request.getParameter("department")));
 				newUser.getAuthority().setAuthorityRole(Enums.StringtoEnumConverterRole(request.getParameter("role")));
 				
-				userDao.updateUser(user, newUser);
+				userService.updateUser(user, newUser);
 				return new RedirectView(request.getContextPath()+"/officer/list");
 			}
 		} else {
@@ -89,7 +84,7 @@ public class OfficerController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/addPost")
 	public RedirectView addOfficerPost(HttpServletRequest request, Model model) {
-		User u = userDao.getOfficerByUsername((String)request.getParameter("username"));
+		User u = userService.getOfficerByUsername((String)request.getParameter("username"));
 		if(u==null) {
 			User user = new User();
 			UserInformation ui = new UserInformation();
@@ -108,7 +103,7 @@ public class OfficerController {
 			user.getAuthority().setUsername(user.getUsername());
 			user.getAuthority().setAuthorityRole(Enums.StringtoEnumConverterRole(request.getParameter("role")));
 			
-			userDao.insertUser(user);
+			userService.insertUser(user);
 			
 			return new RedirectView(request.getContextPath()+"/officer/list");
 		} else {

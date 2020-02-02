@@ -1,9 +1,9 @@
-package gr.hua.ds.users.dao;
+package gr.hua.ds.service;
 
 import gr.hua.ds.users.model.Authority;
 import gr.hua.ds.users.model.User;
 
-public interface AuthorityDAO {
+public interface AuthorityService {
 	public Authority findAuthority(User user);
 	
 	public void insertAuthority(Authority authority);

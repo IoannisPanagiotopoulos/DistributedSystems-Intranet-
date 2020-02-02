@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import gr.hua.ds.algorithms.RankingAlgorithm;
-import gr.hua.ds.users.dao.ApplicationDAO;
-import gr.hua.ds.users.dao.DepartmentDAO;
+import gr.hua.ds.service.ApplicationService;
+import gr.hua.ds.service.DepartmentService;
 import gr.hua.ds.users.model.Application;
 import gr.hua.ds.users.model.Department;
 import gr.hua.ds.users.model.Enums;
@@ -25,15 +25,15 @@ import gr.hua.ds.users.model.Enums;
 public class DepartmentController {
 	
 	@Autowired
-	private DepartmentDAO departmentDao;
+	private DepartmentService departmentService;
 	
 	@Autowired
-	private ApplicationDAO applicationDao;
+	private ApplicationService applicationService;
 	
 	@Secured("ROLE_SUPERVISOR")
 	@GetMapping("/list")
 	public String getDepartments(Model model) {
-		List<Department> departments = departmentDao.getDepartments();
+		List<Department> departments = departmentService.getDepartments();
 		model.addAttribute("departments", departments);
 		return "list-department";
 	}
@@ -41,7 +41,7 @@ public class DepartmentController {
 	@Secured("ROLE_SUPERVISOR")
 	@PostMapping("/activate")
 	public RedirectView activateDepartment(HttpServletRequest request, Model model) {
-		Department department = departmentDao
+		Department department = departmentService
 				.getDepartment(Enums.StringtobeEnumConverterDept(request.getParameter("department")));
 		
 		if (request.getParameter("activate").equals("stop")) {
@@ -51,7 +51,7 @@ public class DepartmentController {
 			department.setActive(Enums.Activable.inactive);
 			department.setPercentage(0);
 			
-			List<Application> applications = applicationDao.
+			List<Application> applications = applicationService.
 					getActivatedApplicationsByDept(department.getDepartmentName());
 			
 			RankingAlgorithm algo = new RankingAlgorithm();
@@ -60,7 +60,7 @@ public class DepartmentController {
 				algo.rankingCalculator(application);
 			}
 			
-		    departmentDao.updateDepartment(department);
+		    departmentService.updateDepartment(department);
 		    
 		    return new RedirectView(request.getContextPath()+"/department/list");
 		} else {
@@ -70,7 +70,7 @@ public class DepartmentController {
 			department.setActive(Enums.Activable.active);
 			department.setPercentage(Integer.valueOf(request.getParameter("percentage")));	
 			
-			departmentDao.updateDepartment(department);
+			departmentService.updateDepartment(department);
 			
 			return new RedirectView(request.getContextPath()+"/department/list");
 		}

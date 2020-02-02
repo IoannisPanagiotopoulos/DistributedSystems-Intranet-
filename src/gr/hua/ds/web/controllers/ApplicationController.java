@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import gr.hua.ds.users.dao.ApplicationDAO;
-import gr.hua.ds.users.dao.UserDAO;
-import gr.hua.ds.users.daoimpl.ApplicationDAOImpl;
+import gr.hua.ds.service.ApplicationService;
+import gr.hua.ds.service.UserService;
 import gr.hua.ds.users.model.Application;
 import gr.hua.ds.users.model.Enums.Activable;
 import gr.hua.ds.users.model.User;
@@ -26,17 +25,17 @@ import gr.hua.ds.users.model.User;
 public class ApplicationController {
 	
 	@Autowired
-	private UserDAO userDao;
+	private UserService userService;
 	
 	@Autowired
-	private ApplicationDAO applicationDao;
+	private ApplicationService applicationService;
 
 	@Secured("ROLE_OFFICER")
 	@GetMapping("/list")
 	public String showApplications(Principal principal, Model model) {
-		User user = userDao.getOfficerByUsername(principal.getName());
-		ApplicationDAO applicationDAO = new ApplicationDAOImpl();
-		List<Application> applications = applicationDAO.getApplicationsByDepartment(user.getUserInformation().getDepartmentName());
+		User user = userService.getOfficerByUsername(principal.getName());
+
+		List<Application> applications = applicationService.getApplicationsByDepartment(user.getUserInformation().getDepartmentName());
 		model.addAttribute("applications", applications);
 		
 		return "list-application";
@@ -46,13 +45,13 @@ public class ApplicationController {
 	@PostMapping("/handle")
 	public RedirectView handleApplication(HttpServletRequest request) {
 		String username = request.getParameter("username");
-		Application application = applicationDao.getApplicationActiveByUsername(username);
+		Application application = applicationService.getApplicationActiveByUsername(username);
 		if(request.getParameter("submit").equals("approve")) {
 			application.setActive(Activable.active);
 		} else {
 			application.setActive(Activable.inactive);
 		}
-		applicationDao.updateApplication(application);
+		applicationService.updateApplication(application);
 		return new RedirectView(request.getContextPath()+"/application/list");
 	}
 }
