@@ -20,6 +20,7 @@ import gr.hua.ds.users.model.Authority;
 import gr.hua.ds.users.model.Enums;
 import gr.hua.ds.users.model.User;
 import gr.hua.ds.users.model.UserInformation;
+import gr.hua.ds.users.model.Enums.Role;
 
 @Controller
 @RequestMapping("/officer")
@@ -69,8 +70,12 @@ public class OfficerController {
 				}
 				newUser.getUserInformation().setName(request.getParameter("name"));
 				newUser.getUserInformation().setEmail(request.getParameter("email"));
-				newUser.getUserInformation().setDepartmentName(Enums.StringtobeEnumConverterDept(request.getParameter("department")));
 				newUser.getAuthority().setAuthorityRole(Enums.StringtoEnumConverterRole(request.getParameter("role")));
+				if(!user.getAuthority().getAuthorityRole().equals(Role.ROLE_SUPERVISOR)) {
+					user.getUserInformation().setDepartmentName(Enums.StringtobeEnumConverterDept(request.getParameter("department")));
+				} else {
+					user.getUserInformation().setDepartmentName(null);
+				}
 				
 				userService.updateUser(user, newUser);
 				return new RedirectView(request.getContextPath()+"/officer/list");
@@ -99,9 +104,11 @@ public class OfficerController {
 			user.getUserInformation().setUsername(user.getUsername());
 			user.getUserInformation().setName(request.getParameter("name"));
 			user.getUserInformation().setEmail(request.getParameter("email"));
-			user.getUserInformation().setDepartmentName(Enums.StringtobeEnumConverterDept(request.getParameter("department")));
 			user.getAuthority().setUsername(user.getUsername());
 			user.getAuthority().setAuthorityRole(Enums.StringtoEnumConverterRole(request.getParameter("role")));
+			if(!user.getAuthority().getAuthorityRole().equals(Role.ROLE_SUPERVISOR)) {
+				user.getUserInformation().setDepartmentName(Enums.StringtobeEnumConverterDept(request.getParameter("department")));
+			}
 			
 			userService.insertUser(user);
 			
