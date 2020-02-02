@@ -75,20 +75,9 @@ local.properties
 .apt_generated/
 .apt_generated_test/
 
-/db.properties
+src/db.properties
 
 # Scala IDE specific (Scala & Java development for Eclipse)
 .cache-main
 .scala_dependencies
 .worksheet
-© 2020 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-Training
-Blog
-About
