@@ -30,6 +30,9 @@ public class DepartmentController {
 	@Autowired
 	private ApplicationService applicationService;
 	
+	@Autowired
+	private RankingAlgorithm rankingAlgorithmService;
+	
 	@Secured("ROLE_SUPERVISOR")
 	@GetMapping("/list")
 	public String getDepartments(Model model) {
@@ -54,10 +57,8 @@ public class DepartmentController {
 			List<Application> applications = applicationService.
 					getActivatedApplicationsByDept(department.getDepartmentName());
 			
-			RankingAlgorithm algo = new RankingAlgorithm();
-			
 			for(Application application: applications) {
-				algo.rankingCalculator(application);
+				rankingAlgorithmService.rankingCalculator(application);
 			}
 			
 		    departmentService.updateDepartment(department);

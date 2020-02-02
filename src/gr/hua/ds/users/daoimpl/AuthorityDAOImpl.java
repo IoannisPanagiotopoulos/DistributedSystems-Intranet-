@@ -2,8 +2,6 @@ package gr.hua.ds.users.daoimpl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,6 @@ public class AuthorityDAOImpl implements AuthorityDAO {
 		return selectedAuthority;
 	}
    	
-	@Transactional
 	@Override
 	public void insertAuthority(Authority authority) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -44,7 +41,6 @@ public class AuthorityDAOImpl implements AuthorityDAO {
 
 	}
 
-	@Transactional
 	@Override
 	public void updateAuthority(Authority authority) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -53,7 +49,6 @@ public class AuthorityDAOImpl implements AuthorityDAO {
 
 	}
 
-	@Transactional
 	@Override
 	public void deleteAuthority(Authority authority) {		
 		Session session = this.sessionFactory.getCurrentSession();

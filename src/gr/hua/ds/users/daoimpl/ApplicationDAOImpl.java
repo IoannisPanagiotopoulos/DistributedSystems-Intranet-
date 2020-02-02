@@ -3,7 +3,6 @@ package gr.hua.ds.users.daoimpl;
 import java.util.List;
 
 import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -89,7 +88,6 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 		return application;
 	}
 
-	@Transactional
 	@Override
 	public void updateApplication(Application app) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -98,7 +96,6 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
 	}
 	
-	@Transactional
 	@Override
 	public void deleteApplication(Application app) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -107,7 +104,6 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
 	}
 
-	@Transactional
 	@Override
 	public void insertApplication(Application app) {
 		Session session = this.sessionFactory.getCurrentSession();

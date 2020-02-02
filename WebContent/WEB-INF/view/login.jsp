@@ -9,7 +9,6 @@
 <link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet" >
 </head>
 <body>
-<img src="C:\Users\mantz\Desktop\login-jsp\logo.png">
 	<div class="wrapper fadeInDown">
 		<div id="formContent">
 			<!-- Tabs Titles -->

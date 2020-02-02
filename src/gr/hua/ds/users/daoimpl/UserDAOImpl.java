@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -76,7 +75,6 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
-	@Transactional
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getStudents() {
@@ -103,7 +101,7 @@ public class UserDAOImpl implements UserDAO {
 		return users;
 	}
 	
-	@Transactional
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getOfficers() {
@@ -149,7 +147,7 @@ public class UserDAOImpl implements UserDAO {
 		return users;
 	}
 	
-   	@Transactional
+
 	@Override
 	public void insertUserOnly(User user) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -158,7 +156,7 @@ public class UserDAOImpl implements UserDAO {
 		
 	}
 	
-   	@Transactional
+
 	@Override
 	public void insertUser(User user) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -175,14 +173,9 @@ public class UserDAOImpl implements UserDAO {
 		deleteUser(oldUser);
 	
 		insertUser(newUser);
-//		Session session = this.sessionFactory.openSession();
-//		Transaction tx = session.beginTransaction();
-//		session.saveOrUpdate(user);
-//		tx.commit();
-//		session.close();
 	}
 
-   	@Transactional
+
 	@Override
 	public void deleteUser(User user) {
 		
@@ -193,7 +186,7 @@ public class UserDAOImpl implements UserDAO {
 		session.delete(user);
 	}
 
-   	@Transactional
+
 	@Override
 	public User getOfficerByUsername(String username) {
 		Session session = this.sessionFactory.getCurrentSession();

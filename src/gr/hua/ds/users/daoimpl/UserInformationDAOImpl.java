@@ -3,7 +3,6 @@ package gr.hua.ds.users.daoimpl;
 import java.util.List;
 
 import javax.persistence.Query;
-import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +30,6 @@ public class UserInformationDAOImpl implements UserInformationDAO {
 
 	}
 
-	@Transactional
 	@Override
 	public void deleteUserInformation(UserInformation ui) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -40,7 +38,6 @@ public class UserInformationDAOImpl implements UserInformationDAO {
 
 	}
 
-	@Transactional
 	@Override
 	public void insertUserInformation(UserInformation ui) {
 		Session session = this.sessionFactory.getCurrentSession();

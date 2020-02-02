@@ -2,8 +2,6 @@ package gr.hua.ds.users.daoimpl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,6 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		return applications;
 	}
 
-	@Transactional
 	@Override
 	public void updateDepartment(Department app) {
 		Session session = this.sessionFactory.getCurrentSession();
