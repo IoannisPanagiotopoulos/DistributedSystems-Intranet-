@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import gr.hua.ds.users.dao.ApplicationDAO;
-import gr.hua.ds.users.dao.AuthorityDAO;
-import gr.hua.ds.users.dao.UserDAO;
-import gr.hua.ds.users.dao.UserInformationDAO;
+import gr.hua.ds.service.ApplicationService;
+import gr.hua.ds.service.AuthorityService;
+import gr.hua.ds.service.UserInformationService;
+import gr.hua.ds.service.UserService;
 import gr.hua.ds.users.model.Application;
 import gr.hua.ds.users.model.Authority;
 import gr.hua.ds.users.model.User;
@@ -30,33 +30,33 @@ import gr.hua.ds.users.model.UserInformation;
 public class ApiController {
 	
 	@Autowired
-	private UserDAO userDao;
+	private UserService userService;
 	
 	@Autowired
-	private UserInformationDAO userInformationDao;
+	private UserInformationService userInformationService;
 	
 	@Autowired
-	private AuthorityDAO authorityDao;
+	private AuthorityService authorityService;
 	
 	@Autowired
-	private ApplicationDAO applicationDao;
+	private ApplicationService applicationService;
 	
 	@GetMapping("/students")
 	public List<User> getStudents() {
-		List<User> students = userDao.getStudents();
+		List<User> students = userService.getStudents();
 		return students;
 	}
 	
 	@GetMapping("/users")
 	public List<User> getUsers() {
-		List<User> users = userDao.getUsers();
+		List<User> users = userService.getUsers();
 		return users;
 	}
 	
 	@SuppressWarnings("rawtypes")
 	@GetMapping("/user/{username}")
 	public ResponseEntity getUser(@PathVariable String username) {
-		User user = userDao.getUserByUsername(username);
+		User user = userService.getUserByUsername(username);
 		if(user!=null) {
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
@@ -65,13 +65,13 @@ public class ApiController {
 	
 	@GetMapping("/students/{username}")
 	public User getStudent(@PathVariable String username) {
-		User user = userDao.getStudentByUsername(username);
+		User user = userService.getStudentByUsername(username);
 		return user;
 	}
 	
 	@GetMapping("/applications")
 	public List<Application> getApplications() {
-		List<Application> applications = applicationDao.getActivatedApplications();
+		List<Application> applications = applicationService.getActivatedApplications();
 		return applications;
 	}
 	
@@ -79,7 +79,7 @@ public class ApiController {
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public User addUser(@RequestBody User user) {
-		userDao.insertUserOnly(user);
+		userService.insertUserOnly(user);
 		return user;
 	}
 	
@@ -87,7 +87,7 @@ public class ApiController {
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserInformation addUserInformation(@RequestBody UserInformation userInformation) {
-		userInformationDao.insertUserInformation(userInformation);
+		userInformationService.insertUserInformation(userInformation);
 		return userInformation;
 	}
 	
@@ -95,7 +95,7 @@ public class ApiController {
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Authority addAuthority(@RequestBody Authority authority) {
-		authorityDao.insertAuthority(authority);
+		authorityService.insertAuthority(authority);
 		return authority;
 	}
 	
@@ -103,7 +103,7 @@ public class ApiController {
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public Application addApplication(@RequestBody Application application) {
-		applicationDao.insertApplication(application);
+		applicationService.insertApplication(application);
 		return application;
 	}
 
@@ -112,7 +112,7 @@ public class ApiController {
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserInformation editUser(@RequestBody UserInformation userInformation) {
-		userInformationDao.updateUserInformation(userInformation);
+		userInformationService.updateUserInformation(userInformation);
 		return userInformation;
 	}
 	
