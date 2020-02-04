@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import gr.hua.ds.service.UserService;
@@ -88,7 +89,7 @@ public class OfficerController {
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/addPost")
-	public RedirectView addOfficerPost(HttpServletRequest request, Model model) {
+	public RedirectView addOfficerPost(HttpServletRequest request, Model model, RedirectAttributes redir) {
 		User u = userService.getOfficerByUsername((String)request.getParameter("username"));
 		if(u==null) {
 			User user = new User();
@@ -112,10 +113,13 @@ public class OfficerController {
 			
 			userService.insertUser(user);
 			
-			return new RedirectView(request.getContextPath()+"/officer/list");
+			RedirectView redirectView= new RedirectView(request.getContextPath()+"/officer/list");
+		    redir.addFlashAttribute("success", "Officer Created !");
+			return redirectView;
 		} else {
-			model.addAttribute("error", "Username Already Exists!");
-			return new RedirectView(request.getContextPath()+"/officer/list");
+			RedirectView redirectView= new RedirectView(request.getContextPath()+"/officer/list");
+		    redir.addFlashAttribute("error", "Username Already Exists !");
+			return redirectView;
 		}
 	}
 	

@@ -61,7 +61,7 @@
 	<div class="container">
 		<h2>Add Student</h2>
 		<br> <br>
-	<span name="error">${error}</span>
+	<span class="error">${error}</span>
 
 		<div>
 			<table class="table">
@@ -75,14 +75,14 @@
 					<form action="${pageContext.request.contextPath}/student/addPost" method="post">
 						<tr>
 							<td><input type="text" name="username" autocomplete="off"
-								value=""></td>
+								value="" required></td>
 							<td><input type="password" name="password" autocomplete="off"
-								value=""></td>
+								value="" required></td>
 							<td><input type="text" name="name" autocomplete="off"
-								value=""></td>
+								value="" required></td>
 							<td><input type="email" name="email" autocomplete="off"
-								value=""></td>
-							<td><select name="department">
+								value="" required></td>
+							<td><select name="department" required>
 									<option value="Informatics" selected>Informatics</option>
 									<option value="Geography">Geography</option>
 									<option value="Dietics">Dietics</option>

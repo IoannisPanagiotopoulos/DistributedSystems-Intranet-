@@ -79,16 +79,16 @@
 							<td><input type="password" name="password" autocomplete="off"
 								value=""></td>
 							<td><input type="text" name="name" autocomplete="off"
-								value="${student.userInformation.name}"></td>
+								value="${student.userInformation.name}"  required></td>
 							<td><input type="text" name="email" autocomplete="off"
-								value="${student.userInformation.email}"></td>
-							<td><select name="department">
+								value="${student.userInformation.email}"  required></td>
+							<td><select name="department"  required>
 									<option value="Informatics" selected>Informatics</option>
 									<option value="Geography">Geography</option>
 									<option value="Economics">Economics</option>
 									<option value="Dietics">Dietics</option>
 							</select></td>
-							<td><select name="activated">
+							<td><select name="activated"  required>
 									<option value="active" selected>Activated</option>
 									<option value="inactive">Not Activated</option>
 							</select>

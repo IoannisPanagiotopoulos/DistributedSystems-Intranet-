@@ -63,10 +63,14 @@ public class ApiController {
 		return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@GetMapping("/students/{username}")
-	public User getStudent(@PathVariable String username) {
+	public ResponseEntity getStudent(@PathVariable String username) {
 		User user = userService.getStudentByUsername(username);
-		return user;
+		if(user!=null) {
+			return new ResponseEntity<User>(user, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/applications")

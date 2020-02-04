@@ -62,6 +62,9 @@
 
 		<h2>Officers</h2>
 		<br> <br>
+		
+		<span class="error">${error}</span>
+		<span class="success">${success}</span>
 
 		<div>
 			<table class="table">
@@ -78,7 +81,6 @@
 						</th>
 					</form>
 				</tr>
-				<span name="error">${error}</span>
 				<c:forEach items="${officers}" var="officer">
 					<form class="table" method="post" action="${pageContext.request.contextPath}/officer/id/${officer.username}">
 						<tr>

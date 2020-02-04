@@ -75,20 +75,20 @@
 					<form action="addPost" method="post">
 						<tr>
 							<td><input type="text" name="username" autocomplete="off"
-								value="${username}"></td>
+								value="${username}" required></td>
 							<td><input type="password" name="password" autocomplete="off"
-								value="${password}"></td>
+								value="${password}" required></td>
 							<td><input type="text" name="name" autocomplete="off"
-								value="${name}"></td>
+								value="${name}" required></td>
 							<td><input type="email" name="email" autocomplete="off"
-								value="${email}"></td>
-							<td><select name="department">
+								value="${email}" required></td>
+							<td><select name="department" required>
 									<option value="Informatics" selected>Informatics</option>
 									<option value="Geography">Geography</option>
 									<option value="Dietics">Dietics</option>
 									<option value="Economics">Economics</option>
 							</select></td>
-							<td><select name="role">
+							<td><select name="role" required>
 									<option value="Officer" selected>Officer</option>
 									<option value="Supervisor">Supervisor</option>
 							</select>

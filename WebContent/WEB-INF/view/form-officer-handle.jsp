@@ -80,16 +80,16 @@
 							<td><input type="password" name="password" autocomplete="off"
 								value=""></td>
 							<td><input type="text" name="name" autocomplete="off"
-								value="${officer.userInformation.name}"></td>
+								value="${officer.userInformation.name}" required></td>
 							<td><input type="email" name="email" autocomplete="off"
-								value="${officer.userInformation.email}"></td>
-							<td><select name="department">
+								value="${officer.userInformation.email}" required></td>
+							<td><select name="department" required>
 									<option value="Informatics" selected>Informatics</option>
 									<option value="Geography">Geography</option>
 									<option value="Dietics">Dietics</option>
 									<option value="Economics">Economics</option>
 							</select></td>
-							<td><select name="role">
+							<td><select name="role" required>
 									<option value="Officer" selected>Officer</option>
 									<option value="Supervisor">Supervisor</option>
 							</select>

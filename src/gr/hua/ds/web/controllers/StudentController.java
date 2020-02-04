@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import gr.hua.ds.service.ApplicationService;
@@ -98,8 +99,8 @@ public class StudentController {
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/addPost")
-	public RedirectView addStudentPost(HttpServletRequest request, Model model) {
-		User u = userService.getOfficerByUsername((String)request.getParameter("username"));
+	public RedirectView addStudentPost(HttpServletRequest request, Model model, RedirectAttributes redir) {
+		User u = userService.getStudentByUsername((String)request.getParameter("username"));
 		if(u==null) {
 			User user = new User();
 			UserInformation ui = new UserInformation();
@@ -121,10 +122,13 @@ public class StudentController {
 			
 			userService.insertUser(user);
 			
-			return new RedirectView(request.getContextPath()+"/student/list");
+			RedirectView redirectView= new RedirectView(request.getContextPath()+"/student/list");
+		    redir.addFlashAttribute("success", "Student Created !");
+			return redirectView;
 		} else {
-			model.addAttribute("error", "Username Already Exists!");
-			return new RedirectView(request.getContextPath()+"/student/add");
+			RedirectView redirectView= new RedirectView(request.getContextPath()+"/student/list");
+		    redir.addFlashAttribute("error", "Username Already Exists !");
+			return redirectView;
 		}
 	}
 	
