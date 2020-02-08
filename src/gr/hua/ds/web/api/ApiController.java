@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import gr.hua.ds.service.ApplicationService;
 import gr.hua.ds.service.AuthorityService;
+import gr.hua.ds.service.DepartmentService;
 import gr.hua.ds.service.UserInformationService;
 import gr.hua.ds.service.UserService;
 import gr.hua.ds.users.model.Application;
 import gr.hua.ds.users.model.Authority;
+import gr.hua.ds.users.model.Department;
+import gr.hua.ds.users.model.Enums;
 import gr.hua.ds.users.model.User;
 import gr.hua.ds.users.model.UserInformation;
 
@@ -40,6 +43,9 @@ public class ApiController {
 	
 	@Autowired
 	private ApplicationService applicationService;
+	
+	@Autowired
+	private DepartmentService departmentService;
 	
 	@GetMapping("/students")
 	public List<User> getStudents() {
@@ -69,6 +75,16 @@ public class ApiController {
 		User user = userService.getStudentByUsername(username);
 		if(user!=null) {
 			return new ResponseEntity<User>(user, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@GetMapping("/departments/{departmentName}")
+	public ResponseEntity getDepartment(@PathVariable Enums.Dept departmentName) {
+		Department department = departmentService.getDepartment(departmentName);
+		if(department!=null) {
+			return new ResponseEntity<Department>(department, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(new EmptyJsonResponse(), HttpStatus.OK);
 	}

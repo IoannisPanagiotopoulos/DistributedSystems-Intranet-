@@ -1,5 +1,6 @@
 package gr.hua.ds.web.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +53,14 @@ public class DepartmentController {
 	@GetMapping("/list")
 	public String getDepartments(Model model) {
 		List<Department> departments = departmentService.getDepartments();
+		List<Integer> totalApplications = new ArrayList<Integer>();
+		for(Department department : departments) {
+			//totalApplications.add(department.getApplications().size());
+			int count = applicationService.getActivatedApplicationsByDept(department.getDepartmentName()).size();
+			totalApplications.add(count);
+		}
 		model.addAttribute("departments", departments);
+		model.addAttribute("totalApplications", totalApplications);
 		return "list-department";
 	}
 	
@@ -66,11 +74,14 @@ public class DepartmentController {
 			
 			department
 				.setDepartmentName(Enums.StringtobeEnumConverterDept((String) request.getParameter("department")));
+			department.setPercentage(Integer.valueOf(request.getParameter("percentage")));
 			department.setActive(Enums.Activable.inactive);
 			department.setHasBegun(1);
 			
 			List<Application> applications = applicationService.
 					getActivatedApplicationsByDept(department.getDepartmentName());
+
+			departmentService.updateDepartment(department);
 			
 			rankingAlgorithmService.rankingCalculator(applications);
 			
@@ -88,7 +99,6 @@ public class DepartmentController {
 			department
 				.setDepartmentName(Enums.StringtobeEnumConverterDept(request.getParameter("department")));
 			department.setActive(Enums.Activable.active);
-			department.setPercentage(Integer.valueOf(request.getParameter("percentage")));
 			
 			departmentService.updateDepartment(department);
 			

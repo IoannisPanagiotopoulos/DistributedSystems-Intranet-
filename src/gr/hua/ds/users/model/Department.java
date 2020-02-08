@@ -1,5 +1,6 @@
 package gr.hua.ds.users.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -7,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -30,12 +32,12 @@ public class Department {
 	@Enumerated(EnumType.STRING)
 	private Activable  active;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "department_name")
-	private List<Application> apllications;
-	
 	@Column(name = "hasBegun", columnDefinition = "TINYINT")
 	private int hasBegun;
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "department_name")
+	private List<Application> applications;
 
 	public Department() {
 		
@@ -80,5 +82,14 @@ public class Department {
 	public void setHasBegun(int hasBegun) {
 		this.hasBegun = hasBegun;
 	}
+
+	public List<Application> getApplications() {
+		return applications;
+	}
+
+	public void setApllications(List<Application> applications) {
+		this.applications = applications;
+	}
+	
 	
 }

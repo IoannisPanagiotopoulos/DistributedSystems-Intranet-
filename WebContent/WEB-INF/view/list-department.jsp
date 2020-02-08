@@ -4,6 +4,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 <head>
@@ -68,6 +69,7 @@
 				<tr>
 					<th>Department</th>
 					<th>Department Status</th>
+					<th>Activated Applications</th>
 					<th>Completed Ranking</th>
 					<th>Acceptance Percentage</th>
 					<th>Action</th>
@@ -78,27 +80,39 @@
 						<tr>
 							<td><input type="hidden" name="department"
 								autocomplete="off" value="${String.valueOf(dpt.departmentName)}">${String.valueOf(dpt.departmentName)}</td>
-							<td><input type="hidden" name="active" autocomplete="off"
+							<td align="center"><input type="hidden" name="active" autocomplete="off"
 								value="${dpt.active}">${dpt.active}</td>
-							<td><input type="hidden" name="hasBegun" autocomplete="off"
-								value="${dpt.hasBegun}">${dpt.hasBegun}</td>
+							<td align="center"><input type="hidden" name="totalApplications" autocomplete="off"
+								value="${totalApplications[count.index]}">${totalApplications[count.index]}</td>
+							<td align="center"><input type="hidden" name="hasBegun" autocomplete="off"
+								value="${dpt.hasBegun}">
+								<c:choose>
+									<c:when test="${dpt.hasBegun==1}">
+										Yes
+									</c:when>
+									<c:otherwise>
+										No
+									</c:otherwise>
+								</c:choose>
+									
+							</td>
 							<c:if test="${String.valueOf(dpt.active)=='inactive'}">
 							
 								<c:if test="${dpt.hasBegun==1}">
-									<td><input type="hidden" name="percentage" autocomplete="off"
+									<td align="center"><input type="hidden" name="percentage" autocomplete="off"
 									value="${dpt.percentage}" id="${count.index}">${dpt.percentage} %</td>
 									<td><button class="btn btn-secondary" disabled>Start Application</button></td>
 								</c:if>
 								<c:if test="${dpt.hasBegun==0}">
-									<td><input type="text" name="percentage" autocomplete="off"
+									<td align="center"><input type="hidden" style="text-align:center;" name="percentage" autocomplete="off" size="4"
 										value="${dpt.percentage}" id="${count.index}"></td>
 									<td><button class="btn btn-success" type="submit"
 										name="activate" value="start" id="activate${count.index}">Start Application</button></td>
 								</c:if>
 							</c:if>
 							<c:if test="${String.valueOf(dpt.active)=='active'}">
-								<td><input type="hidden" name="percentage" autocomplete="off"
-									value="${dpt.percentage}" id="${count.index}">${dpt.percentage} %</td>
+								<td align="center"><input type=text style="text-align:center;" name="percentage" autocomplete="off" size="4"
+									value="${dpt.percentage}" id="${count.index}">%</td>
 								<td><button class="btn btn-danger" type="submit"
 										name="activate" value="stop" id="activate${count.index}">Stop Application</button></td>
 							</c:if>
@@ -136,7 +150,7 @@
 	function validateForm(id) {
 		var activateValue=document.getElementById("activate"+id).value;
 		var percentageValue = document.getElementById(id).value;
-		if(activateValue!=="stop"){
+		if(activateValue!=="start"){
 			if (isNaN(percentageValue) || percentageValue<=0 || percentageValue>100) {
 				alert("Percentage must be an integer between 0-100");
 				return false;	
