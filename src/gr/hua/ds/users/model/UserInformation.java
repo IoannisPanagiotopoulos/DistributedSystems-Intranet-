@@ -28,6 +28,15 @@ public class UserInformation {
 	@Column(name = "points")
 	private int points;
 	
+	@Column(name = "rank")
+	private Integer rank;
+	
+	@Column(name = "totalRanks")
+	private int totalRanks;
+	
+	@Column(name = "hasFreeMeal")
+	private Integer hasFreeMeal;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "activated", columnDefinition="ENUM('active','inactive')")
 	private Enums.Activable activated;
@@ -36,13 +45,17 @@ public class UserInformation {
 		
 	}
 
-	public UserInformation(String username, String name, String email, Enums.Dept departmentName, int points, Enums.Activable activated) {
+	public UserInformation(String username, String name, String email, Enums.Dept departmentName, 
+			int points, Integer rank, int totalRanks, Integer hasFreeMeal, Enums.Activable activated) {
 		super();
 		this.username = username;
 		this.name = name;
 		this.email = email;
 		this.departmentName = departmentName;
 		this.points = points;
+		this.rank = rank;
+		this.totalRanks = totalRanks;
+		this.hasFreeMeal = hasFreeMeal;
 		this.activated = activated;
 	}
 
@@ -84,6 +97,30 @@ public class UserInformation {
 
 	public void setPoints(int points) {
 		this.points = points;
+	}
+	
+	public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+
+	public int getTotalRanks() {
+		return totalRanks;
+	}
+
+	public void setTotalRanks(int totalRanks) {
+		this.totalRanks = totalRanks;
+	}
+
+	public Integer getHasFreeMeal() {
+		return hasFreeMeal;
+	}
+
+	public void setHasFreeMeal(Integer hasFreeMeal) {
+		this.hasFreeMeal = hasFreeMeal;
 	}
 
 	public Enums.Activable getActivated() {

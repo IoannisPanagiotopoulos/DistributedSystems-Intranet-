@@ -19,7 +19,10 @@ public interface ApplicationService {
 	
 	List<Application> getActivatedApplicationsByDept(Dept department);
 	
+	List<Application> getApplications();
+	
 	public List<Application> getActivatedApplications();
 	
 	public void insertApplication(Application app);
+	
 }

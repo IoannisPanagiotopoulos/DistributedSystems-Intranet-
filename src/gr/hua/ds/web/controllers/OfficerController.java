@@ -57,12 +57,13 @@ public class OfficerController {
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/handle")
-	public RedirectView handleOfficer(HttpServletRequest request, Model model) {
+	public RedirectView handleOfficer(HttpServletRequest request, Model model, RedirectAttributes redir) {
 		User user = userService.getOfficerByUsername((String)request.getParameter("username"));
 		String checkboxValue = request.getParameter("checkbox");
 		if(user!=null) {
 			if(request.getParameter("action").equals("delete")) {
 				userService.deleteUser(user);
+				redir.addFlashAttribute("success", "User Deleted !");
 				return new RedirectView(request.getContextPath()+"/officer/list");
 			}else {
 				User newUser = user;
@@ -79,10 +80,11 @@ public class OfficerController {
 				}
 				
 				userService.updateUser(user, newUser);
+				redir.addFlashAttribute("success", "User Updated !");
 				return new RedirectView(request.getContextPath()+"/officer/list");
 			}
 		} else {
-			model.addAttribute("error", "Error");
+			redir.addFlashAttribute("error", "Error");
 			return new RedirectView(request.getContextPath()+"/officer/list");
 		}
 	}

@@ -65,4 +65,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 		applicationDao.insertApplication(app);
 	}
 
+	@Transactional
+	@Override
+	public List<Application> getApplications() {
+		return applicationDao.getApplications();
+	}
+
 }

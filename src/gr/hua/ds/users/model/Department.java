@@ -33,16 +33,20 @@ public class Department {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "department_name")
 	private List<Application> apllications;
+	
+	@Column(name = "hasBegun", columnDefinition = "TINYINT")
+	private int hasBegun;
 
 	public Department() {
 		
 	}
 	
-	public Department(Dept departmentName, Activable  active, int percentage) {
+	public Department(Dept departmentName, Activable  active, int percentage, int hasBegun) {
 		super();
 		this.departmentName = departmentName;
 		this.active = active;
 		this.percentage = percentage;
+		this.hasBegun = hasBegun;
 	}
 	
 	public Dept getDepartmentName() {
@@ -67,6 +71,14 @@ public class Department {
 
 	public void setActive(Activable active) {
 		this.active = active;
+	}
+
+	public int getHasBegun() {
+		return hasBegun;
+	}
+
+	public void setHasBegun(int hasBegun) {
+		this.hasBegun = hasBegun;
 	}
 	
 }

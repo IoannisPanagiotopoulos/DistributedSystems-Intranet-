@@ -112,4 +112,17 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Application> getApplications() {
+		Session session = this.sessionFactory.getCurrentSession();
+
+		List<Application> applications = session
+				.createQuery("from Application")
+				.getResultList();
+
+		
+		return applications;
+	}
+
 }

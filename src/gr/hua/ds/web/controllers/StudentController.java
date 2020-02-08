@@ -68,7 +68,7 @@ public class StudentController {
 	}
 	
 	@PostMapping("/handle")
-	public RedirectView handleStudent(HttpServletRequest request, Model model) {
+	public RedirectView handleStudent(HttpServletRequest request, Model model, RedirectAttributes redir) {
 		User user = userService.getStudentByUsername((String)request.getParameter("username"));
 		String checkboxValue = request.getParameter("checkbox");
 		if(user!=null) {
@@ -77,6 +77,7 @@ public class StudentController {
 					applicationService.deleteApplication(user.getApplication());
 				}
 				userService.deleteUser(user);
+				redir.addFlashAttribute("success", "User deleted !");
 				return new RedirectView(request.getContextPath()+"/student/list");
 			}else {
 				User newUser = user;
@@ -89,10 +90,11 @@ public class StudentController {
 				newUser.getUserInformation().setActivated(Enums.StringtoEnumCoverterActivable(request.getParameter("activated")));
 				
 				userService.updateUser(user, newUser);
+				redir.addFlashAttribute("success", "User Updated !");
 				return new RedirectView(request.getContextPath()+"/student/list");
 			}
 		} else {
-			model.addAttribute("error", "Error");
+			redir.addFlashAttribute("error", "Error");
 			return new RedirectView(request.getContextPath()+"/student/list");
 		}
 	}
@@ -122,13 +124,13 @@ public class StudentController {
 			
 			userService.insertUser(user);
 			
-			RedirectView redirectView= new RedirectView(request.getContextPath()+"/student/list");
-		    redir.addFlashAttribute("success", "Student Created !");
-			return redirectView;
+
+		    redir.addFlashAttribute("success", "User Created !");
+			return new RedirectView(request.getContextPath()+"/student/list");
 		} else {
-			RedirectView redirectView= new RedirectView(request.getContextPath()+"/student/list");
+			
 		    redir.addFlashAttribute("error", "Username Already Exists !");
-			return redirectView;
+			return new RedirectView(request.getContextPath()+"/student/list");
 		}
 	}
 	

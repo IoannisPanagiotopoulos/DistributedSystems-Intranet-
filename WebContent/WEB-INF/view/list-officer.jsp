@@ -15,6 +15,7 @@
 <link
 	href="${pageContext.request.contextPath}/resources/css/welcome.css"
 	rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 	<!--<div style="position: absolute; right: 10px; top: 0;">
@@ -63,8 +64,11 @@
 		<h2>Officers</h2>
 		<br> <br>
 		
-		<span class="error">${error}</span>
-		<span class="success">${success}</span>
+		<div id="error_placeholder"></div>
+		<div id="success_placeholder"></div>
+		
+		<input type="hidden" name="error" id="error" value="${error}" />
+		<input type="hidden" name="success" id="success" value="${success}" />
 
 		<div>
 			<table class="table">
@@ -99,4 +103,16 @@
 	</div>
 
 </body>
+<script>
+	var Msg = document.getElementById("error");
+	if(Msg.value.length != 0) {
+		$('#error_placeholder').html('<div class="alert alert-danger"><span>'+Msg.value+'</span></div>')
+	}
+	
+	var Msg2 = document.getElementById("success");
+	if(Msg2.value.length != 0) {
+		console.log('hey')
+		$('#success_placeholder').html('<div class="alert alert-success"><span>'+Msg2.value+'</span></div>')
+	}
+</script>
 </html>

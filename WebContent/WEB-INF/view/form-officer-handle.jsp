@@ -104,12 +104,11 @@
 			</table>
 		</div>
 	</div>
-	<script type="text/javascript">
-     function alertName(){
-      alert("Form has been submitted");
-      }
-	</script>
-
 </body>
+<script>
+	function alertName(){
+    	alert("Form has been submitted");
+    }
+</script>
 </html>
 
