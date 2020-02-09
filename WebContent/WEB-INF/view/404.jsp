@@ -1,12 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-	403 ERROR
+	<div class="container">
+		<div class="alert alert-danger mt-5">
+			<h3 class="alert-heading">Error!</h3>
+			<hr>
+			<ul>
+				<li>${errorMsg}</li>
+			</ul>
+		</div>
+	</div>
+	
+	<footer style="position: fixed; left: 0; bottom: 25px; width: 100%; text-align: center;">
+		<hr />
+		Harokopio @ 2020
+	</footer>	
+	
 </body>
 </html>

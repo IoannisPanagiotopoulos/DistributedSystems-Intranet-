@@ -14,6 +14,17 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
+	
+	<error-page>
+    	<location>/errors</location>
+	</error-page>
 
 	<!-- Step 2: Set up URL mapping for Spring MVC Dispatcher Servlet -->
 	<servlet-mapping>

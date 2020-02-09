@@ -56,7 +56,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 					.invalidateHttpSession(true)
 					.permitAll().and().exceptionHandling()
-					.accessDeniedPage("/403").and().csrf().disable();
+					.accessDeniedPage("/404").and().csrf().disable();
 		}
 	}
 
