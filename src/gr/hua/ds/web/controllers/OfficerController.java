@@ -92,7 +92,7 @@ public class OfficerController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/addPost")
 	public RedirectView addOfficerPost(HttpServletRequest request, Model model, RedirectAttributes redir) {
-		User u = userService.getOfficerByUsername((String)request.getParameter("username"));
+		User u = userService.getUserByUsername((String)request.getParameter("username"));
 		if(u==null) {
 			User user = new User();
 			UserInformation ui = new UserInformation();

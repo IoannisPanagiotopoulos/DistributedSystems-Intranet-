@@ -102,7 +102,7 @@ public class StudentController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping("/addPost")
 	public RedirectView addStudentPost(HttpServletRequest request, Model model, RedirectAttributes redir) {
-		User u = userService.getStudentByUsername((String)request.getParameter("username"));
+		User u = userService.getUserByUsername((String)request.getParameter("username"));
 		if(u==null) {
 			User user = new User();
 			UserInformation ui = new UserInformation();
